@@ -7,3 +7,6 @@ pip install selenium
 pip install requests
 '''
 
+``` sh
+$ gem install console-text-formatter
+```
