@@ -1,0 +1,15 @@
+{
+    "driver": "src\\driver\\phantomjs.exe",
+    "save": {
+        "dirpath": ".\\saves\\",
+        "filename": ""
+    },
+    "load": {
+        "dirpath": ".\\database\\",
+        "filename": "base.csv"
+    },
+    "xingaccaunt": {
+        "login": "petara94@mail.ru",
+        "password": "Keyman228123321"
+    }
+}
