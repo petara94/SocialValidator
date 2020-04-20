@@ -2,7 +2,7 @@
 
 Before start start setup.but or install selenium and requests libraries
 
-'''sh
+```sh
 $ pip install selenium
 $ pip install requests
-'''
+```
