@@ -1,17 +1,30 @@
 from src import SocialChecker
+from src.MailCheck import IsValidEmail
 import json
 import time
 import csv
+
+
+COLUMNS = dict()
+CONFIGS = dict()
+BASE    = []
+RESULT  = []
 
 
 def LoadConfig():
     try:
         with open("config.json", "r") as f:
             global CONFIGS
+            global XingChecker
+            global SimpleChecker
+
             CONFIGS = json.load(f)
+            XingChecker   = SocialChecker.XingChecker(CONFIGS["xingaccaunt"]["cookies"]["value"])
+            SimpleChecker = SocialChecker.SimpleChecker()
     except FileNotFoundError:
         print("Config file not file")
         exit()
+
 
 def LoadDataBase():
     try:
@@ -19,7 +32,6 @@ def LoadDataBase():
             global BASE
             global RESULT
 
-            BASE = []
             _r = csv.reader(f)
             for row in _r:
                 BASE.append(row)
@@ -34,7 +46,6 @@ def LoadDataBase():
 
 def ParseColumns():
     global COLUMNS
-    COLUMNS = dict()
 
     for i, val in enumerate(BASE[0]):
         COLUMNS[str(i)] = str(val)
@@ -48,13 +59,11 @@ def ParseLine(line, index):
             RESULT[index][i] = val
 
 
-def main(url):
+def main():
     LoadConfig()
     LoadDataBase()
     ParseColumns()
 
 
-
-
 if __name__ == "__main__":
-    main(input())
+    main()

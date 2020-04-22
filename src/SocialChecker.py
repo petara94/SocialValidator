@@ -1,5 +1,9 @@
 import requests
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 import time
 import json
 from src.resource.config import CONFIG
@@ -7,8 +11,8 @@ import warnings
 
 
 class SimpleChecker(object):
-    def __init__(self, url):
-        self.__url = url
+    def __init__(self):
+        self.__url = ""
 
     def seturl(self, url):
         self.__url = url
@@ -24,22 +28,13 @@ class SimpleChecker(object):
 
 
 class XingChecker(object):
-    def __init__(self, url, login, password):
-        self.__url = url
-        print("Getting access")
-
-        self.__auth = XingAuth(login, password)
-        self.__authdict = self.__auth.GetAuth()
-        self.__auth.Close()
-        self.__authcookies = self.dictToCookies(self.__authdict)
+    def __init__(self, cookies):
+        self.__url = ""
 
         self.__BASE_REQ_DATA = CONFIG["REQUEST_DATA"]
 
         self.__BASE_HEADERS = CONFIG["REQUEST_HEADERS"]
-        self.__BASE_HEADERS["Cookie"] = self.__authcookies
-
-        print("Done!")
-        print("Ready to work")
+        self.__BASE_HEADERS["Cookie"] = cookies
 
     def IsXingUser(self, url="-1"):
         if url != "-1":
@@ -47,28 +42,11 @@ class XingChecker(object):
         else:
             url = self.__url
 
-        self.__BASE_REQ_DATA["variables"]["profileId"] = self._linkToUserName(
-            url)
-        self.__BASE_HEADERS["Content-Length"] = str(
-            len(json.dumps(self.__BASE_REQ_DATA)))
+        self.__BASE_REQ_DATA["variables"]["profileId"] = self._linkToUserName(url)
+        self.__BASE_HEADERS["Content-Length"] = str(len(json.dumps(self.__BASE_REQ_DATA)))
 
-        req = requests.post(
-            CONFIG["XING_API_URL"], json=self.__BASE_REQ_DATA, headers=self.__BASE_HEADERS)
+        req = requests.post(CONFIG["XING_API_URL"], json=self.__BASE_REQ_DATA, headers=self.__BASE_HEADERS)
         return "\"errors\":" not in req.text
-
-    def dictToCookies(self, d):
-        out = ""
-        for key, val in d.items():
-            out += str(key) + "=" + str(val) + ";"
-        return out
-
-    def _GenReqData(self, url):
-        return str(self.__BASE_REQ_DATA).replace("<-NICKNAME->", self._linkToUserName(url))
-
-    def _GenReqHeaders(self, reqdata):
-        headers = self.__BASE_HEADERS
-        headers["Content-Length"] = str(len(reqdata))
-        return headers
 
     def _linkToUserName(self, url):
         url = url.split('/')
@@ -77,7 +55,7 @@ class XingChecker(object):
 
 class XingAuth(object):
     def __init__(self, login, password):
-        warnings.filterwarnings('ignore')
+        warnings.filterwarnings("ignore")
         self.__driver = webdriver.PhantomJS(
             executable_path="src\\driver\\phantomjs.exe")
         self.__authdata = dict()
@@ -101,7 +79,6 @@ class XingAuth(object):
 
     def GetAuth(self):
         self.__Login()
-        self.__authdata["visitor_id"] = self.__driver.get_cookie("visitor_id")[
-            "value"]
-        self.__authdata["login"] = self.__driver.get_cookie("login")["value"]
+        self.__authdata["visitor_id"] = self.__driver.get_cookie("visitor_id")#["value"]
+        self.__authdata["login"] = self.__driver.get_cookie("login")#["value"]
         return self.__authdata

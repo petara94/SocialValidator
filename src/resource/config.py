@@ -4,7 +4,7 @@ CONFIG = {
     "REQUEST_DATA": {
         "operationName": "getXingId",
         "variables": {
-            "profileId": "NULL",
+            "profileId": "<PASTE_NAME_HERE>",
             "actionsFilter": [
                 "ADD_CONTACT",
                 "ADVERTISE_PROFILE",

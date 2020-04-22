@@ -9,7 +9,18 @@
         "filename": "base.csv"
     },
     "xingaccaunt": {
-        "login": "petara94@mail.ru",
-        "password": "Keyman228123321"
-    }
+        "login": "cxing954@outlook.com",
+        "password": "Z3E4x8eXsgLHPcN",
+        "cookies": {
+            "value" : "visitor_id=cb677153-cbcf-4ce5-a47e-8dcdc046f081;login=MzY1ODY2NzQjMzY1ODY2NzQta3FVUDRrMk9GMHhjamRIcHRrY2pKSkRHQzI1%0ARTBmRTlkRzdTWUNIUndYOA%3D%3D--4cd48b4678289e2fdd38ab821065f5648311540a;",
+            "expires": "20-04-22"
+        }
+    },
+    "columns": [
+        "xing",
+        "email",
+        "instagram",
+        "facebook",
+        "twitter"
+    ]
 }

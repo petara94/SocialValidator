@@ -1,0 +1,4 @@
+{
+    "maxDiskCacheSize": 1000,
+    "loadImages": false
+}
