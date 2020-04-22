@@ -21,6 +21,7 @@ def LoadConfig():
             CONFIGS = json.load(f)
             XingChecker   = SocialChecker.XingChecker(CONFIGS["xingaccaunt"]["cookies"]["value"])
             SimpleChecker = SocialChecker.SimpleChecker()
+
     except FileNotFoundError:
         print("Config file not file")
         exit()
